@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductSearchFragment">
+
+    <TextView
+        android:id="@+id/tv_product_search_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="상품 검색"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_search_capture_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="바코드 촬영"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_product_name_or_barcode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="이름 또는 바코드 번호"
+        android:inputType="textPersonName"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/bt_product_search_submit"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_search_capture_barcode" />
+
+    <Button
+        android:id="@+id/bt_product_search_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="검색"
+        app:layout_constraintBottom_toBottomOf="@+id/et_product_name_or_barcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/et_product_name_or_barcode"
+        app:layout_constraintTop_toTopOf="@+id/et_product_name_or_barcode" />
+
+    <TextView
+        android:id="@+id/tv_search_product_image_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="상품 사진"
+        app:layout_constraintEnd_toStartOf="@+id/tv_search_product_name_head"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_or_barcode" />
+
+    <TextView
+        android:id="@+id/tv_search_product_name_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="상품 이름"
+        app:layout_constraintEnd_toStartOf="@+id/tv_search_product_barcode_head"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_search_product_image_head"
+        app:layout_constraintTop_toTopOf="@+id/tv_search_product_image_head" />
+
+    <TextView
+        android:id="@+id/tv_search_product_barcode_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="바코드 번호"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_search_product_name_head"
+        app:layout_constraintTop_toTopOf="@+id/tv_search_product_name_head" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_product"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_search_product_image_head"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
