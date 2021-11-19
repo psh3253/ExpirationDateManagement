@@ -5,13 +5,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.FragmentProductListBinding;
@@ -23,7 +21,8 @@ public class ProductListFragment extends Fragment {
 
     MainActivity mainActivity;
     FragmentProductListBinding binding;
-    ProductDao productDao = Info.appDatabase.productDao();
+    ProductAdapter productAdapter;
+    ProductDao productDao = DBInfo.appDatabase.productDao();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -40,10 +39,10 @@ public class ProductListFragment extends Fragment {
 
         ArrayList<Product> products = (ArrayList<Product>) productDao.getAll();
 
-        ProductAdapter productAdapter = new ProductAdapter();
+        productAdapter = new ProductAdapter(mainActivity);
         productAdapter.productList = products;
-        binding.rvListProduct.setAdapter(productAdapter);
-        binding.rvListProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvProductList.setAdapter(productAdapter);
+        binding.rvProductList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         binding.btProductRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,21 +60,8 @@ public class ProductListFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ArrayList<Product> products = (ArrayList<Product>) productDao.getAll();
-
-        ProductAdapter productAdapter = new ProductAdapter();
-        productAdapter.productList = products;
-        binding.rvListProduct.setAdapter(productAdapter);
-    }
-
     public void refreshProductList() {
-        ArrayList<Product> products = (ArrayList<Product>) productDao.getAll();
-
-        ProductAdapter productAdapter = new ProductAdapter();
-        productAdapter.productList = products;
-        binding.rvListProduct.setAdapter(productAdapter);
+        productAdapter.productList = (ArrayList<Product>) productDao.getAll();
+        binding.rvProductList.setAdapter(productAdapter);
     }
 }

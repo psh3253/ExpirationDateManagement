@@ -15,7 +15,10 @@ public interface ProductDao {
     List<Product> getAll();
 
     @Query("SELECT * FROM product WHERE productBarcode = :productBarcode")
-    Product getProduct(String productBarcode);
+    Product getProductByBarcode(String productBarcode);
+
+    @Query("SELECT * FROM product WHERE productName = :productName")
+    Product getProductByName(String productName);
 
     @Insert
     void insert(Product product);

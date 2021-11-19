@@ -1,7 +1,9 @@
 package com.astar.expirationdatemanagement;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,15 +19,30 @@ import java.util.Arrays;
 
 public class ViewPagerFragment extends Fragment {
 
+    MainActivity mainActivity;
     FragmentViewPagerBinding binding;
+    ProductListFragment productListFragment;
+    ExpirationDateListFragment expirationDateListFragment;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        if (context instanceof MainActivity)
+            mainActivity = (MainActivity) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentViewPagerBinding.inflate(inflater, container, false);
+        if (productListFragment == null)
+            productListFragment = new ProductListFragment();
+        if (expirationDateListFragment == null)
+            expirationDateListFragment = new ExpirationDateListFragment();
 
-        ArrayList<Fragment> fragmentList = new ArrayList(Arrays.asList(new ProductListFragment(), new ExpirationDateListFragment(), new ExpirationDateListFragment()));
-        FragmentAdapter adapter = new FragmentAdapter(getActivity());
+        ArrayList<Fragment> fragmentList = new ArrayList(Arrays.asList(productListFragment, expirationDateListFragment, new NotificationFragment()));
+        FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager(), getLifecycle());
         adapter.fragmentList = fragmentList;
         binding.viewPager.setAdapter(adapter);
 
@@ -34,5 +51,13 @@ public class ViewPagerFragment extends Fragment {
         tabLayoutMediator.attach();
 
         return binding.getRoot();
+    }
+
+    public ProductListFragment getProductListFragment() {
+        return productListFragment;
+    }
+
+    public ExpirationDateListFragment getExpirationDateListFragment() {
+        return expirationDateListFragment;
     }
 }

@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/bt_register_capture_barcode"
+        android:id="@+id/bt_product_register_capture_barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,24 +46,24 @@
         android:hint="상품 이름"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/et_product_barcode"
+        app:layout_constraintBottom_toTopOf="@+id/et_product_register_product_barcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_register_capture_barcode" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_product_register_capture_barcode" />
 
     <TextView
-        android:id="@+id/tv_product_barcode_info"
+        android:id="@+id/tv_product_register_product_barcode_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="바코드 번호"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/et_product_barcode"
-        app:layout_constraintStart_toStartOf="@+id/et_product_barcode" />
+        app:layout_constraintBottom_toTopOf="@+id/et_product_register_product_barcode"
+        app:layout_constraintStart_toStartOf="@+id/et_product_register_product_barcode" />
 
     <EditText
-        android:id="@+id/et_product_barcode"
+        android:id="@+id/et_product_register_product_barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -91,8 +91,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/bt_product_register_submit"
-        app:layout_constraintStart_toStartOf="@+id/et_product_barcode"
-        app:layout_constraintTop_toBottomOf="@+id/et_product_barcode"
+        app:layout_constraintStart_toStartOf="@+id/et_product_register_product_barcode"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_register_product_barcode"
         tools:src="@tools:sample/avatars" />
 
     <Button
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:text="사진 선택"
         app:layout_constraintBottom_toBottomOf="@+id/iv_product_image_preview"
-        app:layout_constraintEnd_toEndOf="@+id/et_product_barcode"
+        app:layout_constraintEnd_toEndOf="@+id/et_product_register_product_barcode"
         app:layout_constraintTop_toTopOf="@+id/iv_product_image_preview" />
 
     <Button

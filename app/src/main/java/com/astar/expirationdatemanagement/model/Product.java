@@ -35,16 +35,4 @@ public class Product {
     public String getProductImagePath() {
         return productImagePath;
     }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setProductBarcode(String productBarcode) {
-        this.productBarcode = productBarcode;
-    }
-
-    public void setProductImagePath(String productImagePath) {
-        this.productImagePath = productImagePath;
-    }
 }

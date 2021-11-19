@@ -1,38 +1,29 @@
 package com.astar.expirationdatemanagement;
 
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
 import com.astar.expirationdatemanagement.dao.AppDatabase;
 import com.astar.expirationdatemanagement.databinding.ActivityMainBinding;
-import com.journeyapps.barcodescanner.ScanContract;
-import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     ViewPagerFragment viewPagerFragment;
+    ProductSearchFragment productSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +31,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Info.appDatabase = Room.databaseBuilder(this, AppDatabase.class, "app")
+        DBInfo.appDatabase = Room.databaseBuilder(this, AppDatabase.class, "app")
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
-
-        Info.appDatabase.productDao().deleteAll();
 
         viewPagerFragment = new ViewPagerFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, viewPagerFragment);
+        transaction.replace(R.id.fragment_container, viewPagerFragment);
         transaction.commit();
     }
 
@@ -59,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.fragment_container, new ProductRegisterFragment())
                     .addToBackStack(null);
         } else if (fragmentId == 2) {
-            transaction.replace(R.id.fragment_container, new ProductSearchFragment())
+            productSearchFragment = new ProductSearchFragment();
+            transaction.replace(R.id.fragment_container, productSearchFragment)
+                    .addToBackStack(null);
+        } else if (fragmentId == 3) {
+            transaction.replace(R.id.fragment_container, new ExpirationDateRegisterFragment())
                     .addToBackStack(null);
         }
         transaction.commit();
@@ -105,7 +99,17 @@ public class MainActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    public String getFullAbsolutePath(String fileName) {
-        return getFilesDir().getAbsolutePath() + File.separatorChar + fileName;
+    public void refreshProductList() {
+        viewPagerFragment.getProductListFragment().refreshProductList();
+    }
+
+    public void refreshSearch() {
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            productSearchFragment.refreshSearch();
+        }
+    }
+
+    public void refreshExpirationDateList() {
+        viewPagerFragment.getExpirationDateListFragment().refreshExpirationDateList();
     }
 }

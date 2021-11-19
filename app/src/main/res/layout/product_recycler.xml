@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_recycler"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -14,26 +15,26 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_product_name"
+        app:layout_constraintEnd_toStartOf="@+id/tv_product_product_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_product_name"
+        android:id="@+id/tv_product_product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="상품 이름"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_product_barcode"
+        app:layout_constraintEnd_toStartOf="@+id/tv_product_product_barcode"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_product_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_product_barcode"
+        android:id="@+id/tv_product_product_barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="바코드 번호"
@@ -41,6 +42,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_product_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_product_product_name"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
