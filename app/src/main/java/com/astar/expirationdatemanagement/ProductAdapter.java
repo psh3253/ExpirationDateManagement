@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.astar.expirationdatemanagement.dao.ExpirationDateDao;
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.ProductRecyclerBinding;
 import com.astar.expirationdatemanagement.model.Product;
@@ -22,6 +23,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
 
     MainActivity mainActivity;
     ProductDao productDao = DBInfo.appDatabase.productDao();
+    ExpirationDateDao expirationDateDao = DBInfo.appDatabase.expirationDateDao();
     ArrayList<Product> productList = new ArrayList<>();
 
     public ProductAdapter(MainActivity mainActivity) {
@@ -46,10 +48,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         productDao.delete(product);
+                        expirationDateDao.deleteByProductBarcode(product.getProductBarcode());
                         File imageFile = new File(product.getProductImagePath());
                         if(imageFile.exists())
                             imageFile.delete();
                         mainActivity.refreshProductList();
+                        mainActivity.refreshExpirationDateList();
                         mainActivity.refreshSearch();
                         return true;
                     }

@@ -23,6 +23,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ExpirationDateRegisterFragment extends Fragment {
@@ -58,6 +59,8 @@ public class ExpirationDateRegisterFragment extends Fragment {
                         }
                     });
         });
+        Calendar calendar = Calendar.getInstance();
+        binding.calendarView.setMinDate(calendar.getTimeInMillis());
         binding.calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

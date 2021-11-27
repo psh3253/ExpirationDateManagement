@@ -27,6 +27,9 @@ public interface ExpirationDateDao {
     @Delete
     void delete(ExpirationDate expirationDate);
 
+    @Query("DELETE FROM expirationdate WHERE productBarcode = :productBarcode")
+    void deleteByProductBarcode(String productBarcode);
+
     @Query("DELETE FROM expirationdate")
     void deleteAll();
 }

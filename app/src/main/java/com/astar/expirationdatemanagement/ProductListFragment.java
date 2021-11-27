@@ -57,6 +57,7 @@ public class ProductListFragment extends Fragment {
                 mainActivity.changeFragment(2);
             }
         });
+
         return binding.getRoot();
     }
 
