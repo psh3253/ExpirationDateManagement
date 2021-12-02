@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExpirationDateListFragment">
+    tools:context=".view.ExpirationDateListFragment">
 
     <TextView
         android:id="@+id/tv_expiration_list_title"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="유통기한 목록"
+        android:text="@string/expiration_date_list"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="유툥기한 등록"
+        android:text="@string/expiration_date_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="상품 이름"
+        android:text="@string/product_name"
         app:layout_constraintEnd_toStartOf="@+id/tv_expiration_list_product_expiration_head"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         android:id="@+id/tv_expiration_list_product_expiration_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="유통기한"
+        android:text="@string/expiration_date"
         app:layout_constraintEnd_toStartOf="@+id/tv_expiration_list_product_deadline_head"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_expiration_list_product_name_head"
@@ -65,7 +65,7 @@
         android:id="@+id/tv_expiration_list_product_deadline_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="남은 기한"
+        android:text="@string/deadline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_expiration_list_product_expiration_head"

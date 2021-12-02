@@ -12,17 +12,12 @@ import java.util.List;
 
 @Dao
 public interface ExpirationDateDao {
-    @Query("SELECT * FROM expirationdate")
-    List<ExpirationDate> getAll();
 
     @Query("SELECT * FROM expirationdate WHERE expirationDate >= STRFTIME('%Y년 %m월 %d일', 'now')")
     List<ExpirationDate> getCurrentExpirationList();
 
     @Query("SELECT * FROM expirationdate WHERE expirationDate < STRFTIME('%Y년 %m월 %d일', 'now')")
     List<ExpirationDate> getPreviousExpirationList();
-
-    @Query("SELECT * FROM expirationdate WHERE productBarcode = :productBarcode")
-    ExpirationDate getExpirationByProductBarcode(String productBarcode);
 
     @Query("SELECT * FROM expirationdate WHERE productBarcode = :productBarcode AND expirationDate = :expirationDate")
     ExpirationDate getExpiration(String productBarcode, String expirationDate);

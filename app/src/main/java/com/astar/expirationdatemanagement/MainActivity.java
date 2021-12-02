@@ -18,6 +18,11 @@ import androidx.room.Room;
 
 import com.astar.expirationdatemanagement.dao.AppDatabase;
 import com.astar.expirationdatemanagement.databinding.ActivityMainBinding;
+import com.astar.expirationdatemanagement.receiver.AlarmReceiver;
+import com.astar.expirationdatemanagement.view.ExpirationDateRegisterFragment;
+import com.astar.expirationdatemanagement.view.ProductRegisterFragment;
+import com.astar.expirationdatemanagement.view.ProductSearchFragment;
+import com.astar.expirationdatemanagement.view.ViewPagerFragment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -25,7 +30,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -137,6 +141,6 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 60, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, pendingIntent);
     }
 }

@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.FragmentProductRegisterBinding;
 import com.astar.expirationdatemanagement.model.Product;
@@ -40,7 +42,7 @@ public class ProductRegisterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProductRegisterBinding.inflate(inflater, container, false);
         binding.btProductRegisterCaptureBarcode.setOnClickListener(new View.OnClickListener() {
@@ -76,26 +78,23 @@ public class ProductRegisterFragment extends Fragment {
                 }
             });
         });
-        binding.btProductRegisterSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String productName = binding.etProductName.getText().toString();
-                String productBarcode = binding.etProductRegisterProductBarcode.getText().toString();
-                if(productName.isEmpty()) {
-                    Toast.makeText(getContext(), "상품 이름을 적어주세요", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if(productBarcode.isEmpty()) {
-                    Toast.makeText(getContext(), "바코드 번호를 적어주세요", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if(productDao.getProductByBarcode(productBarcode) != null) {
-                    Toast.makeText(getContext(), "이미 등록된 바코드 번호입니다", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String imageFilePath = mainActivity.saveImageFile(productImageUri, productBarcode);
-                productDao.insert(new Product(productName, productBarcode, imageFilePath));
-                mainActivity.removeFragment();
-                mainActivity.refreshProductList();
+        binding.btProductRegisterSubmit.setOnClickListener(v -> {
+            String productName = binding.etProductName.getText().toString();
+            String productBarcode = binding.etProductRegisterProductBarcode.getText().toString();
+            if(productName.isEmpty()) {
+                Toast.makeText(getContext(), "상품 이름을 적어주세요", Toast.LENGTH_SHORT).show();
+                return;
+            } else if(productBarcode.isEmpty()) {
+                Toast.makeText(getContext(), "바코드 번호를 적어주세요", Toast.LENGTH_SHORT).show();
+                return;
+            } else if(productDao.getProductByBarcode(productBarcode) != null) {
+                Toast.makeText(getContext(), "이미 등록된 바코드 번호입니다", Toast.LENGTH_SHORT).show();
+                return;
             }
+            String imageFilePath = mainActivity.saveImageFile(productImageUri, productBarcode);
+            productDao.insert(new Product(productName, productBarcode, imageFilePath));
+            mainActivity.removeFragment();
+            mainActivity.refreshProductList();
         });
         return binding.getRoot();
     }

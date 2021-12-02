@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

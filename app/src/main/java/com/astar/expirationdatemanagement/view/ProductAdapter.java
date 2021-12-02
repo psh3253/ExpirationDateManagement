@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
 import com.astar.expirationdatemanagement.dao.ExpirationDateDao;
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.ProductRecyclerBinding;
@@ -41,25 +43,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
     public void onBindViewHolder(@NonNull ProductHolder productHolder, int position) {
         Product product = productList.get(position);
         productHolder.setProduct(product);
-        productHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+        productHolder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> menu.add("삭제").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add("삭제").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        productDao.delete(product);
-                        expirationDateDao.deleteByProductBarcode(product.getProductBarcode());
-                        File imageFile = new File(product.getProductImagePath());
-                        if(imageFile.exists())
-                            imageFile.delete();
-                        mainActivity.refreshProductList();
-                        mainActivity.refreshExpirationDateList();
-                        mainActivity.refreshSearch();
-                        return true;
-                    }
-                });
+            public boolean onMenuItemClick(MenuItem item) {
+                productDao.delete(product);
+                expirationDateDao.deleteByProductBarcode(product.getProductBarcode());
+                File imageFile = new File(product.getProductImagePath());
+                if(imageFile.exists())
+                    imageFile.delete();
+                mainActivity.refreshProductList();
+                mainActivity.refreshExpirationDateList();
+                mainActivity.refreshSearch();
+                return true;
             }
-        });
+        }));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
 import com.astar.expirationdatemanagement.dao.ExpirationDateDao;
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.NotificationRecyclerBinding;

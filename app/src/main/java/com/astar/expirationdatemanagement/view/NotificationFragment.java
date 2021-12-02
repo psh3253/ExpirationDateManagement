@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,11 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
 import com.astar.expirationdatemanagement.dao.ExpirationDateDao;
 import com.astar.expirationdatemanagement.databinding.FragmentNotificationBinding;
 import com.astar.expirationdatemanagement.model.ExpirationDate;

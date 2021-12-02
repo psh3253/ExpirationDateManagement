@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.receiver;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
+import com.astar.expirationdatemanagement.R;
 import com.astar.expirationdatemanagement.dao.ExpirationDateDao;
 import com.astar.expirationdatemanagement.model.ExpirationDate;
 

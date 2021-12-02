@@ -1,4 +1,4 @@
-package com.astar.expirationdatemanagement;
+package com.astar.expirationdatemanagement.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.astar.expirationdatemanagement.DBInfo;
+import com.astar.expirationdatemanagement.MainActivity;
 import com.astar.expirationdatemanagement.dao.ProductDao;
 import com.astar.expirationdatemanagement.databinding.FragmentProductListBinding;
 import com.astar.expirationdatemanagement.model.Product;
@@ -33,7 +35,7 @@ public class ProductListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProductListBinding.inflate(inflater, container, false);
 
@@ -44,19 +46,9 @@ public class ProductListFragment extends Fragment {
         binding.rvProductList.setAdapter(productAdapter);
         binding.rvProductList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.btProductRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.changeFragment(1);
-            }
-        });
+        binding.btProductRegister.setOnClickListener(v -> mainActivity.changeFragment(1));
 
-        binding.btProductSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.changeFragment(2);
-            }
-        });
+        binding.btProductSearch.setOnClickListener(v -> mainActivity.changeFragment(2));
 
         return binding.getRoot();
     }

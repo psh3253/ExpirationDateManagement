@@ -8,6 +8,22 @@
     <string name="removal">제거</string>
     <string name="notification_message_2">매대에서 제거해주세요.</string>
     <string name="notification_message_1">" 상품이 유통기한이 지났습니다."</string>
+    <string name="deadline">남은 기한</string>
+    <string name="expiration_date">유통기한</string>
+    <string name="product_name">상품 이름</string>
+    <string name="expiration_date_list">유통기한 목록</string>
+    <string name="expiration_date_register">유통기한 등록</string>
+    <string name="barcode_capture">바코드 촬영</string>
+    <string name="product_barcode">상품 바코드 번호</string>
+    <string name="product_register">상품 등록</string>
+    <string name="product_image">상품 사진</string>
+    <string name="barcode">바코드 번호</string>
+    <string name="product_search">상품 검색</string>
+    <string name="image">사진</string>
+    <string name="image_choose">사진 선택</string>
+    <string name="register">등록</string>
+    <string name="product_name_or_barcode">이름 또는 바코드 번호</string>
+    <string name="search">검색</string>
     <string-array name="sort_standard_array">
         <item>이름순</item>
         <item>날짜순</item>
