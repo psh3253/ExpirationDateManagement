@@ -23,6 +23,7 @@ public class ViewPagerFragment extends Fragment {
     FragmentViewPagerBinding binding;
     ProductListFragment productListFragment;
     ExpirationDateListFragment expirationDateListFragment;
+    NotificationFragment notificationFragment;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -33,15 +34,17 @@ public class ViewPagerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentViewPagerBinding.inflate(inflater, container, false);
         if (productListFragment == null)
             productListFragment = new ProductListFragment();
         if (expirationDateListFragment == null)
             expirationDateListFragment = new ExpirationDateListFragment();
+        if (notificationFragment == null)
+            notificationFragment = new NotificationFragment();
 
-        ArrayList<Fragment> fragmentList = new ArrayList(Arrays.asList(productListFragment, expirationDateListFragment, new NotificationFragment()));
+        ArrayList<Fragment> fragmentList = new ArrayList(Arrays.asList(productListFragment, expirationDateListFragment, notificationFragment));
         FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager(), getLifecycle());
         adapter.fragmentList = fragmentList;
         binding.viewPager.setAdapter(adapter);
@@ -59,5 +62,9 @@ public class ViewPagerFragment extends Fragment {
 
     public ExpirationDateListFragment getExpirationDateListFragment() {
         return expirationDateListFragment;
+    }
+
+    public NotificationFragment getNotificationFragment() {
+        return notificationFragment;
     }
 }

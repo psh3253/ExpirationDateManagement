@@ -43,7 +43,7 @@ public class ExpirationDateListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentExpirationDateListBinding.inflate(inflater, container, false);
 
@@ -51,59 +51,47 @@ public class ExpirationDateListFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spSortStandard.setAdapter(adapter);
 
-        expirationDateList = (ArrayList<ExpirationDate>) expirationDateDao.getAll();
+        expirationDateList = (ArrayList<ExpirationDate>) expirationDateDao.getCurrentExpirationList();
         expirationDateAdapter = new ExpirationDateAdapter(mainActivity);
         expirationDateAdapter.expirationDateList = expirationDateList;
         binding.rvExpirationList.setAdapter(expirationDateAdapter);
         binding.rvExpirationList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.btExpiratiionRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.changeFragment(3);
-            }
-        });
+        binding.btExpiratiionRegister.setOnClickListener(v -> mainActivity.changeFragment(3));
 
         binding.spSortStandard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Collections.sort(expirationDateList, new Comparator<ExpirationDate>() {
-                        @Override
-                        public int compare(ExpirationDate o1, ExpirationDate o2) {
+                    expirationDateList.sort((o1, o2) -> {
+                        String productName1 = productDao.getProductByBarcode(o1.getProductBarcode()).getProductName();
+                        String productName2 = productDao.getProductByBarcode(o2.getProductBarcode()).getProductName();
+                        if (productName1.compareTo(productName2) < 0)
+                            return -1;
+                        else if (productName1.equals(productName2))
+                            if (o1.getExpirationDate().compareTo(o2.getExpirationDate()) < 0)
+                                return -1;
+                            else
+                                return 0;
+                        else
+                            return 1;
+                    });
+                    expirationDateAdapter.notifyDataSetChanged();
+                } else {
+                    expirationDateList.sort((o1, o2) -> {
+                        String expirationDate1 = o1.getExpirationDate();
+                        String expirationDate2 = o2.getExpirationDate();
+                        if (expirationDate1.compareTo(expirationDate2) < 0)
+                            return -1;
+                        else if (expirationDate1.equals(expirationDate2)) {
                             String productName1 = productDao.getProductByBarcode(o1.getProductBarcode()).getProductName();
                             String productName2 = productDao.getProductByBarcode(o2.getProductBarcode()).getProductName();
                             if (productName1.compareTo(productName2) < 0)
                                 return -1;
-                            else if (productName1.equals(productName2))
-                                if(o1.getExpirationDate().compareTo(o2.getExpirationDate()) < 0)
-                                    return -1;
-                                else
-                                    return 0;
                             else
-                                return 1;
-                        }
-                    });
-                    expirationDateAdapter.notifyDataSetChanged();
-                } else {
-                    Collections.sort(expirationDateList, new Comparator<ExpirationDate>() {
-                        @Override
-                        public int compare(ExpirationDate o1, ExpirationDate o2) {
-                            String expirationDate1 = o1.getExpirationDate();
-                            String expirationDate2 = o2.getExpirationDate();
-                            if (expirationDate1.compareTo(expirationDate2) < 0)
-                                return -1;
-                            else if (expirationDate1.equals(expirationDate2)) {
-                                String productName1 = productDao.getProductByBarcode(o1.getProductBarcode()).getProductName();
-                                String productName2 = productDao.getProductByBarcode(o2.getProductBarcode()).getProductName();
-                                if(productName1.compareTo(productName2) < 0)
-                                    return -1;
-                                else
-                                    return 0;
-                            }
-                            else
-                                return 1;
-                        }
+                                return 0;
+                        } else
+                            return 1;
                     });
                     binding.rvExpirationList.setAdapter(expirationDateAdapter);
                 }
@@ -119,7 +107,7 @@ public class ExpirationDateListFragment extends Fragment {
     }
 
     public void refreshExpirationDateList() {
-        expirationDateList = (ArrayList<ExpirationDate>) expirationDateDao.getAll();
+        expirationDateList = (ArrayList<ExpirationDate>) expirationDateDao.getCurrentExpirationList();
         expirationDateAdapter.expirationDateList = expirationDateList;
         binding.rvExpirationList.setAdapter(expirationDateAdapter);
     }

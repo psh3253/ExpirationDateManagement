@@ -1,6 +1,12 @@
 package com.astar.expirationdatemanagement;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.MimeTypeMap;
@@ -18,6 +24,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, viewPagerFragment);
         transaction.commit();
+
+        setAlarm();
+        createNotificationChannel();
     }
 
     public void changeFragment(int fragmentId) {
@@ -68,11 +79,7 @@ public class MainActivity extends AppCompatActivity {
         String ext = getFileExtension(productImagePath);
         String newFileName = getFilesDir().getAbsolutePath() + File.separatorChar + barcodeNumber + "." + ext;
 
-        BufferedInputStream bis = null;
-        BufferedOutputStream bos = null;
-        try {
-            bis = new BufferedInputStream(getContentResolver().openInputStream(productImagePath));
-            bos = new BufferedOutputStream(new FileOutputStream(newFileName, false));
+        try (BufferedInputStream bis = new BufferedInputStream(getContentResolver().openInputStream(productImagePath)); BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFileName, false))) {
             byte[] buf = new byte[1024];
             bis.read(buf);
             do {
@@ -81,13 +88,6 @@ public class MainActivity extends AppCompatActivity {
             return newFileName;
         } catch (IOException e) {
             Toast.makeText(this, "사진 파일을 저장할 수 없습니다.", Toast.LENGTH_SHORT).show();
-        } finally {
-            try {
-                if (bis != null) bis.close();
-                if (bos != null) bos.close();
-            } catch (IOException e) {
-
-            }
         }
         return "";
     }
@@ -104,12 +104,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshSearch() {
-        if(getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             productSearchFragment.refreshSearch();
         }
     }
 
     public void refreshExpirationDateList() {
         viewPagerFragment.getExpirationDateListFragment().refreshExpirationDateList();
+    }
+
+    public void refreshNotification() {
+        viewPagerFragment.getNotificationFragment().refreshNotification();
+    }
+
+    private void createNotificationChannel() {
+        CharSequence name = "알림";
+        String description = "notification";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel("notification", name, importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    public void setAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 60, pendingIntent);
     }
 }

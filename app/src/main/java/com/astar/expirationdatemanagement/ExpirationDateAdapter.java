@@ -43,19 +43,11 @@ public class ExpirationDateAdapter extends RecyclerView.Adapter<ExpirationDateHo
     public void onBindViewHolder(@NonNull ExpirationDateHolder holder, int position) {
         ExpirationDate expirationDate = expirationDateList.get(position);
         holder.setExpirationDate(expirationDate);
-        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add("삭제").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        expirationDateDao.delete(expirationDate);
-                        mainActivity.refreshExpirationDateList();
-                        return true;
-                    }
-                });
-            }
-        });
+        holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> menu.add("삭제").setOnMenuItemClickListener(item -> {
+            expirationDateDao.delete(expirationDate);
+            mainActivity.refreshExpirationDateList();
+            return true;
+        }));
     }
 
     @Override
@@ -78,17 +70,14 @@ class ExpirationDateHolder extends RecyclerView.ViewHolder {
         binding.tvExpirationProductName.setText(productDao.getProductByBarcode(expirationDate.getProductBarcode()).getProductName());
         binding.tvExpiration.setText(expirationDate.getExpirationDate());
 
-        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
         Date date = null;
         try {
             date = sdf.parse(expirationDate.getExpirationDate() + " 23:59:59");
-        } catch (ParseException e) {
+        } catch (ParseException ignored) {
 
         }
         if (date != null) {
-            Log.d("TestTest", new Date(date.getTime()).toString());
-            Log.d("TestTest", new Date(System.currentTimeMillis()).toString());
             int deadLine = (int) Math.abs((date.getTime() - System.currentTimeMillis()) / (24 * 60 * 60 * 1000));
             String deadLineStr = deadLine + "일";
             binding.tvDeadline.setText(deadLineStr);

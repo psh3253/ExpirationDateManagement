@@ -3,6 +3,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="product_list">상품목록</string>
+    <string name="notification">알림</string>
+    <string name="warning_message">※꼭 상품을 매대에서 제거하고\n\"제거\" 버튼을 눌러주세요.</string>
+    <string name="removal">제거</string>
+    <string name="notification_message_2">매대에서 제거해주세요.</string>
+    <string name="notification_message_1">" 상품이 유통기한이 지났습니다."</string>
     <string-array name="sort_standard_array">
         <item>이름순</item>
         <item>날짜순</item>
