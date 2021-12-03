@@ -13,10 +13,10 @@ import java.util.List;
 @Dao
 public interface ExpirationDateDao {
 
-    @Query("SELECT * FROM expirationdate WHERE expirationDate >= STRFTIME('%Y년 %m월 %d일', 'now')")
+    @Query("SELECT * FROM expirationdate WHERE expirationDate >= STRFTIME('%Y년 %m월 %d일', DATETIME('now', 'localtime'))")
     List<ExpirationDate> getCurrentExpirationList();
 
-    @Query("SELECT * FROM expirationdate WHERE expirationDate < STRFTIME('%Y년 %m월 %d일', 'now')")
+    @Query("SELECT * FROM expirationdate WHERE expirationDate < STRFTIME('%Y년 %m월 %d일', DATETIME('now', 'localtime'))")
     List<ExpirationDate> getPreviousExpirationList();
 
     @Query("SELECT * FROM expirationdate WHERE productBarcode = :productBarcode AND expirationDate = :expirationDate")

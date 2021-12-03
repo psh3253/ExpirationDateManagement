@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,24 +65,25 @@ public class ProductSearchFragment extends Fragment {
                     });
         });
 
-        binding.btProductSearchSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<Product> productList = new ArrayList<>();
-                Product product = productDao.getProductByName(binding.etProductNameOrBarcode.getText().toString());
+        binding.btProductSearchSubmit.setOnClickListener(v -> {
+            if(binding.etProductNameOrBarcode.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "검색할 상품의 이름 또는 바코드 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            ArrayList<Product> productList;
+            productList = (ArrayList<Product>) productDao.getProductByName(binding.etProductNameOrBarcode.getText().toString());
+            if (productList.size() == 0) {
+                Product product = productDao.getProductByBarcode(binding.etProductNameOrBarcode.getText().toString());
                 if (product == null) {
-                    product = productDao.getProductByBarcode(binding.etProductNameOrBarcode.getText().toString());
-                    if (product == null) {
-                        productAdapter.productList = new ArrayList<>();
-                        binding.rvSearchProduct.setAdapter(productAdapter);
-                        Toast.makeText(getContext(), "검색된 상품이 없습니다", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    productAdapter.productList = new ArrayList<>();
+                    binding.rvSearchProduct.setAdapter(productAdapter);
+                    Toast.makeText(getContext(), "검색된 상품이 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 productList.add(product);
-                productAdapter.productList = productList;
-                binding.rvSearchProduct.setAdapter(productAdapter);
             }
+            productAdapter.productList = productList;
+            binding.rvSearchProduct.setAdapter(productAdapter);
         });
 
         return binding.getRoot();

@@ -17,8 +17,8 @@ public interface ProductDao {
     @Query("SELECT * FROM product WHERE productBarcode = :productBarcode")
     Product getProductByBarcode(String productBarcode);
 
-    @Query("SELECT * FROM product WHERE productName = :productName")
-    Product getProductByName(String productName);
+    @Query("SELECT * FROM product WHERE productName LIKE '%' || :productName || '%'")
+    List<Product> getProductByName(String productName);
 
     @Insert
     void insert(Product product);

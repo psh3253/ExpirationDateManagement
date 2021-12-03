@@ -18,6 +18,7 @@ import com.astar.expirationdatemanagement.databinding.FragmentProductListBinding
 import com.astar.expirationdatemanagement.model.Product;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ProductListFragment extends Fragment {
 
@@ -30,7 +31,7 @@ public class ProductListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        if(context instanceof MainActivity)
+        if (context instanceof MainActivity)
             mainActivity = (MainActivity) context;
     }
 
@@ -42,6 +43,15 @@ public class ProductListFragment extends Fragment {
         ArrayList<Product> products = (ArrayList<Product>) productDao.getAll();
 
         productAdapter = new ProductAdapter(mainActivity);
+        products.sort((product, t1) -> {
+            if (product.getProductName().compareTo(t1.getProductName()) < 0) {
+                return -1;
+            } else if (product.getProductName().compareTo(t1.getProductName()) == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
         productAdapter.productList = products;
         binding.rvProductList.setAdapter(productAdapter);
         binding.rvProductList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -54,7 +64,17 @@ public class ProductListFragment extends Fragment {
     }
 
     public void refreshProductList() {
-        productAdapter.productList = (ArrayList<Product>) productDao.getAll();
+        ArrayList<Product> productList = (ArrayList<Product>) productDao.getAll();
+        productList.sort((product, t1) -> {
+            if (product.getProductName().compareTo(t1.getProductName()) < 0) {
+                return -1;
+            } else if (product.getProductName().compareTo(t1.getProductName()) == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
+        productAdapter.productList = productList;
         binding.rvProductList.setAdapter(productAdapter);
     }
 }

@@ -38,7 +38,7 @@ public class ExpirationDateRegisterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof MainActivity) {
+        if (context instanceof MainActivity) {
             mainActivity = (MainActivity) context;
         }
     }
@@ -72,7 +72,7 @@ public class ExpirationDateRegisterFragment extends Fragment {
             } catch (ParseException ignored) {
 
             }
-            if(date != null)
+            if (date != null)
                 view.setDate(date.getTime());
         });
         binding.btExpirationRegisterSubmit.setOnClickListener(v -> {
@@ -81,7 +81,6 @@ public class ExpirationDateRegisterFragment extends Fragment {
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
             SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date(binding.calendarView.getDate());
-            Date currentDate = new Date(System.currentTimeMillis());
             String dateStr = sdf1.format(date) + " 23:59:59";
             try {
                 date = sdf2.parse(dateStr);
@@ -91,13 +90,10 @@ public class ExpirationDateRegisterFragment extends Fragment {
             if (productBarcode.isEmpty()) {
                 Toast.makeText(getContext(), "바코드 번호를 적어주세요", Toast.LENGTH_SHORT).show();
                 return;
-                } else if (date != null && date.before(currentDate)) {
-                    Toast.makeText(getContext(), "유통기한은 지난 날짜로 설정할 수 없습니다", Toast.LENGTH_SHORT).show();
-                    return;
-            } else if(productDao.getProductByBarcode(productBarcode) == null) {
+            } else if (productDao.getProductByBarcode(productBarcode) == null) {
                 Toast.makeText(getContext(), "등록되지 않은 상품의 바코드 번호입니다.", Toast.LENGTH_SHORT).show();
                 return;
-            }else if (expirationDateDao.getExpiration(productBarcode, sdf.format(date)) != null) {
+            } else if (expirationDateDao.getExpiration(productBarcode, sdf.format(date)) != null) {
                 Toast.makeText(getContext(), "이미 등록된 유통기한입니다", Toast.LENGTH_SHORT).show();
                 return;
             }
