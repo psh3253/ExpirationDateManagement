@@ -1,6 +1,6 @@
 # ExpirationDateManagement
 
-![](header.jpg){: width="50%" height="50%"}
+![](header.jpg)
 
 상품과 유통기한을 쉽게 관리하고 유통기한 경과 알림을 보내주는 안드로이드 어플리케이션입니다.
 
